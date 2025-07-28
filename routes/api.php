@@ -40,6 +40,8 @@ Route::prefix('auth')->group(function () {
 Route::middleware('auth:api')->group(function () {
     Route::apiResource('categories', CategoryController::class);
 
-    // admin only but we will add authorization later
-    Route::apiResource('users', UserController::class);
+    // admin only routes
+    Route::middleware('role:admin')->group(function () {
+        Route::apiResource('users', UserController::class);
+    });
 });
