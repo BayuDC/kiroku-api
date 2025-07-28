@@ -4,20 +4,18 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration {
+class CreateUsageConsumablesTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('usage_consumables', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('username')->unique();
-            $table->string('password');
-            $table->enum('role', ['admin', 'staff']);
-            $table->rememberToken();
+            $table->foreignId('usage_id')->constrained('usages')->onDelete('cascade');
+            $table->foreignId('consumable_id')->constrained('consumables')->onDelete('cascade');
+            $table->bigInteger('quantity');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ class CreateUsersTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('usage_consumables');
     }
 }
