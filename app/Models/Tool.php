@@ -33,6 +33,15 @@ class Tool extends Model {
     ];
 
     /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'status' => 'available',
+    ];
+
+    /**
      * Get the category that owns the tool.
      */
     public function category() {
