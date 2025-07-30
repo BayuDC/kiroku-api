@@ -12,10 +12,19 @@ class UserController extends Controller {
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-        $users = User::all();
+    public function index(Request $request) {
+        $query = User::query();
+
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where('name', 'LIKE', '%' . $search . '%')
+                ->orWhere('username', 'LIKE', '%' . $search . '%');
+        }
+
+        $users = $query->get();
         return response()->json($users);
     }
 

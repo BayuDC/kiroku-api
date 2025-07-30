@@ -11,10 +11,18 @@ class ConsumableController extends Controller {
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-        $consumables = Consumable::with('category')->get();
+    public function index(Request $request) {
+        $query = Consumable::with('category');
+
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where('name', 'LIKE', '%' . $search . '%');
+        }
+
+        $consumables = $query->get();
         return response()->json($consumables);
     }
 

@@ -12,10 +12,18 @@ class ToolController extends Controller {
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-        $tools = Tool::with('category')->get();
+    public function index(Request $request) {
+        $query = Tool::with('category');
+
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where('name', 'LIKE', '%' . $search . '%');
+        }
+
+        $tools = $query->get();
         return response()->json($tools);
     }
 

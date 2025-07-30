@@ -12,10 +12,18 @@ class CategoryController extends Controller {
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-        $categories = Category::all();
+    public function index(Request $request) {
+        $query = Category::query();
+
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where('name', 'LIKE', '%' . $search . '%');
+        }
+
+        $categories = $query->get();
         return response()->json($categories);
     }
 
