@@ -47,4 +47,17 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('role:admin')->group(function () {
         Route::apiResource('users', UserController::class);
     });
+
+    // Route::get('/usages');
+    // Route::get('/usages/:id');
+    // Route::post('/usages');
+    // Route::delete('/usages');
+
+    // Route::get('/loans');
+    // Route::get('/loans/:id');
+    // Route::post('/loans');
+    // Route::patch('/loans/:id'); // return
+    // Route::delete('/loans/:id'); // delete loan
+
+
 });

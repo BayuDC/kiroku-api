@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder {
             CategorySeeder::class,
             ToolSeeder::class,
             ConsumableSeeder::class,
+            UsageSeeder::class,
+            LoanSeeder::class,
         ]);
     }
 }
