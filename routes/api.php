@@ -58,7 +58,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/loans', [LoanController::class, 'index']);
     Route::get('/loans/{id}', [LoanController::class, 'show']);
     Route::post('/loans', [LoanController::class, 'store']);
-    Route::patch('/loans/{id}', [LoanController::class, 'update']); // return
+    Route::put('/loans/{id}', [LoanController::class, 'update']); // return
     Route::delete('/loans/{id}', [LoanController::class, 'destroy']); // delete loan
 
 

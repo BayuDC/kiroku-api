@@ -18,6 +18,11 @@ class CategorySeeder extends Seeder {
             'Peralatan Solder',
             'Alat Bantu Praktikum',
             'Bahan Habis Pakai',
+            'Peralatan Jaringan',
+            'Microcontroller & Development Board',
+            'Peralatan Audio Video',
+            'Komponen Mekanik',
+            'Peralatan Keselamatan Kerja',
         ];
 
         foreach ($categories as $category) {
