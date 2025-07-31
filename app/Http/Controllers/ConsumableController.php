@@ -22,6 +22,10 @@ class ConsumableController extends Controller {
             $query->where('name', 'LIKE', '%' . $search . '%');
         }
 
+        if ($request->has('limit') && is_numeric($request->limit)) {
+            $query->limit($request->limit);
+        }
+
         $consumables = $query->get();
         return response()->json($consumables);
     }

@@ -23,6 +23,10 @@ class ToolController extends Controller {
             $query->where('name', 'LIKE', '%' . $search . '%');
         }
 
+        if ($request->has('limit')) {
+            $query->limit($request->limit);
+        }
+
         $tools = $query->get();
         return response()->json($tools);
     }
