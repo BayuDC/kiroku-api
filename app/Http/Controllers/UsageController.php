@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Usage;
 use App\Models\Consumable;
+use App\Http\Requests\StoreUsageRequest;
 use Illuminate\Support\Facades\DB;
 
 class UsageController extends Controller {
@@ -43,14 +44,7 @@ class UsageController extends Controller {
         return response()->json($usage);
     }
 
-    public function store(Request $request) {
-        $request->validate([
-            'used_by' => 'required|string',
-            'consumables' => 'required|array|min:1',
-            'consumables.*.id' => 'required|integer|exists:consumables,id',
-            'consumables.*.quantity' => 'required|integer|min:1',
-        ]);
-
+    public function store(StoreUsageRequest $request) {
         $consumableResults = [];
         $allValid = true;
 

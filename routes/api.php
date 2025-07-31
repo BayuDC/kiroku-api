@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ConsumableController;
+use App\Http\Controllers\LoanController;
 use App\Http\Controllers\ToolController;
 use App\Http\Controllers\UsageController;
 use App\Http\Controllers\UserController;
@@ -54,11 +55,11 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/usages', [UsageController::class, 'store']);
     Route::delete('/usages/{id}', [UsageController::class, 'destroy']);
 
-    // Route::get('/loans');
-    // Route::get('/loans/:id');
-    // Route::post('/loans');
-    // Route::patch('/loans/:id'); // return
-    // Route::delete('/loans/:id'); // delete loan
+    Route::get('/loans', [LoanController::class, 'index']);
+    Route::get('/loans/{id}', [LoanController::class, 'show']);
+    Route::post('/loans', [LoanController::class, 'store']);
+    Route::patch('/loans/{id}', [LoanController::class, 'update']); // return
+    Route::delete('/loans/{id}', [LoanController::class, 'destroy']); // delete loan
 
 
 });
