@@ -32,6 +32,40 @@ class ToolController extends Controller {
     }
 
     /**
+     * Display a paginated listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function paginate(Request $request) {
+        $query = Tool::with('category');
+
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where('name', 'LIKE', '%' . $search . '%');
+        }
+
+        // Filter by category if provided
+        if ($request->has('category_id') && !empty($request->category_id)) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        // Filter by status if provided
+        if ($request->has('status') && !empty($request->status)) {
+            $query->where('status', $request->status);
+        }
+
+        // Filter by condition if provided
+        if ($request->has('condition') && !empty($request->condition)) {
+            $query->where('condition', $request->condition);
+        }
+
+        $perPage = $request->get('per_page', 10); // Default 10 items per page
+        $tools = $query->orderBy('id', 'asc')->paginate($perPage);
+        return response()->json($tools);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreToolRequest  $request

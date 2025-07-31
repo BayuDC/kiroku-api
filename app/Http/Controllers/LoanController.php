@@ -35,7 +35,8 @@ class LoanController extends Controller {
         }
 
         // Sort by active loans first, then returned loans, both by loan_date desc
-        $loans = $query->orderByRaw('return_date IS NULL DESC, loan_date DESC')->get();
+        $perPage = $request->get('per_page', 10); // Default 10 items per page
+        $loans = $query->orderByRaw('return_date IS NULL DESC, loan_date DESC')->paginate($perPage);
         return response()->json($loans);
     }
 

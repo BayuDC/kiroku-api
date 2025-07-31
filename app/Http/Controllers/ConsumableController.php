@@ -31,6 +31,42 @@ class ConsumableController extends Controller {
     }
 
     /**
+     * Display a paginated listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function paginate(Request $request) {
+        $query = Consumable::with('category');
+
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where('name', 'LIKE', '%' . $search . '%');
+        }
+
+        // Filter by category if provided
+        if ($request->has('category_id') && !empty($request->category_id)) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        // Filter by stock status if provided
+        if ($request->has('stock_status')) {
+            if ($request->stock_status === 'low') {
+                // Assuming low stock is less than 10
+                $query->where('stock', '<', 10);
+            } elseif ($request->stock_status === 'out') {
+                $query->where('stock', '<=', 0);
+            } elseif ($request->stock_status === 'available') {
+                $query->where('stock', '>', 0);
+            }
+        }
+
+        $perPage = $request->get('per_page', 10); // Default 10 items per page
+        $consumables = $query->orderBy('id', 'asc')->paginate($perPage);
+        return response()->json($consumables);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreConsumableRequest  $request

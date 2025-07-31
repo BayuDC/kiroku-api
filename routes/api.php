@@ -42,9 +42,14 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::middleware('auth:api')->group(function () {
+    Route::get('/tools/paginate', [ToolController::class, 'paginate']);
+    Route::get('/consumables/paginate', [ConsumableController::class, 'paginate']);
+
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('consumables', ConsumableController::class);
     Route::apiResource('tools', ToolController::class);
+
+    // Paginated routes for tools and consumables
 
     Route::middleware('role:admin')->group(function () {
         Route::apiResource('users', UserController::class);

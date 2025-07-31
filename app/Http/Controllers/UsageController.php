@@ -24,7 +24,8 @@ class UsageController extends Controller {
             $query->where('used_by', 'LIKE', '%' . $search . '%');
         }
 
-        $usages = $query->orderBy('date', 'desc')->get();
+        $perPage = $request->get('per_page', 10); // Default 10 items per page
+        $usages = $query->orderBy('date', 'desc')->paginate($perPage);
         return response()->json($usages);
     }
 
