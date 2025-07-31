@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ConsumableController;
 use App\Http\Controllers\ToolController;
+use App\Http\Controllers\UsageController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -48,10 +49,10 @@ Route::middleware('auth:api')->group(function () {
         Route::apiResource('users', UserController::class);
     });
 
-    // Route::get('/usages');
-    // Route::get('/usages/:id');
-    // Route::post('/usages');
-    // Route::delete('/usages');
+    Route::get('/usages', [UsageController::class, 'index']);
+    Route::get('/usages/{id}', [UsageController::class, 'show']);
+    Route::post('/usages', [UsageController::class, 'store']);
+    Route::delete('/usages/{id}', [UsageController::class, 'destroy']);
 
     // Route::get('/loans');
     // Route::get('/loans/:id');
