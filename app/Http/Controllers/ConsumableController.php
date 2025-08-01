@@ -127,4 +127,46 @@ class ConsumableController extends Controller {
         $consumable->delete();
         return response()->json(['message' => 'Barang berhasil dihapus'], 200);
     }
+
+    /**
+     * Display the usage history for a specific consumable.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function history(Request $request, $id) {
+        $consumable = Consumable::find($id);
+
+        if (!$consumable) {
+            return response()->json(['message' => 'Barang tidak ditemukan'], 404);
+        }
+
+        $perPage = $request->get('per_page', 10); // Default 10 items per page
+
+        $usages = $consumable->usages()
+            ->with(['staff:id,name'])
+            ->withPivot('quantity')
+            ->orderBy('date', 'desc')
+            ->paginate($perPage);
+
+        return response()->json([
+            'data' => $usages->map(function ($usage) {
+                return [
+                    'usage_id' => $usage->id,
+                    'used_by' => $usage->used_by,
+                    'staff' => $usage->staff ? $usage->staff->name : null,
+                    'date' => $usage->date,
+                    'quantity' => $usage->pivot->quantity,
+                ];
+            }),
+            'current_page' => $usages->currentPage(),
+            'per_page' => $usages->perPage(),
+            'total' => $usages->total(),
+            'last_page' => $usages->lastPage(),
+            'from' => $usages->firstItem(),
+            'to' => $usages->lastItem(),
+            'has_more_pages' => $usages->hasMorePages(),
+        ]);
+    }
 }

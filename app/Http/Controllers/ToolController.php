@@ -126,4 +126,49 @@ class ToolController extends Controller {
         $tool->delete();
         return response()->json(['message' => 'Alat berhasil dihapus'], 200);
     }
+
+    /**
+     * Display the loan history for a specific tool.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function history(Request $request, $id) {
+        $tool = Tool::find($id);
+
+        if (!$tool) {
+            return response()->json(['message' => 'Alat tidak ditemukan'], 404);
+        }
+
+        $perPage = $request->get('per_page', 10); // Default 10 items per page
+
+        $loans = $tool->loans()
+            ->with(['staff:id,name'])
+            ->withPivot('condition_before', 'condition_after')
+            ->orderBy('loan_date', 'desc')
+            ->paginate($perPage);
+
+        return response()->json([
+            'data' => $loans->map(function ($loan) {
+                return [
+                    'loan_id' => $loan->id,
+                    'used_by' => $loan->used_by,
+                    'staff' => $loan->staff ? $loan->staff->name : null,
+                    'loan_date' => $loan->loan_date,
+                    'return_date' => $loan->return_date,
+                    'condition_before' => $loan->pivot->condition_before,
+                    'condition_after' => $loan->pivot->condition_after,
+                    'is_active' => is_null($loan->return_date),
+                ];
+            }),
+            'current_page' => $loans->currentPage(),
+            'per_page' => $loans->perPage(),
+            'total' => $loans->total(),
+            'last_page' => $loans->lastPage(),
+            'from' => $loans->firstItem(),
+            'to' => $loans->lastItem(),
+            'has_more_pages' => $loans->hasMorePages(),
+        ]);
+    }
 }
