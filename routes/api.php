@@ -21,15 +21,18 @@ use App\Http\Controllers\UserController;
 |
 */
 
+// Health check route
+Route::get('/', function () {
+    return response()->json([
+        'status' => 'ok',
+        'message' => 'API is running',
+        'timestamp' => now()
+    ]);
+});
+
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-
-Route::get('/', function () {
-    return response()->json([
-        'message' => 'Hello World',
-    ]);
-});
 
 // Public authentication routes
 Route::prefix('auth')->group(function () {

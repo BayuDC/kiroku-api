@@ -1,0 +1,1 @@
+import{a2 as u,T as r,a3 as i,n as p}from"./DILZzNnB.js";import{u as c}from"./B1YFAJ8f.js";const h=u(async(e,s)=>{let t,a;const n=r(),o=c();if((n.isHydrating||e.path!==s.path)&&([t,a]=i(()=>o.sync()),t=await t,a(),!t))return p("/login")});export{h as default};

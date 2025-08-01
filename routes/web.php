@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Serve Vue app for all routes except API routes
+Route::get('/{any}', function () {
+    return response()->file(public_path('index.html'));
+})->where('any', '^(?!api).*$');
+
+// Handle root route specifically for Vue app
 Route::get('/', function () {
-    return view('welcome');
+    return response()->file(public_path('index.html'));
 });

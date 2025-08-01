@@ -1,0 +1,1 @@
+import{R as s}from"./DILZzNnB.js";import{u as n}from"./BQfcDCpi.js";const p=async(r,o)=>{const a=s(),e=localStorage.getItem("token");n();try{const t=await $fetch(r,{baseURL:a.public.apiUrl,method:"PUT",headers:{Accept:"application/json",Authorization:e?`Bearer ${e}`:""},body:o});return null}catch(t){return t.response._data.errors?t.response._data.errors:t.data}};export{p as u};

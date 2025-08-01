@@ -1,0 +1,1 @@
+import{a2 as o,a4 as r}from"./DILZzNnB.js";import{u as s}from"./B1YFAJ8f.js";function u(t){var e;return((e=s().user)==null?void 0:e.role)==t}const d=o((t,a)=>{if(!u("admin"))return r({statusCode:403,statusMessage:"Forbidden"})});export{d as default};

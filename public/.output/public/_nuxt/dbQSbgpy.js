@@ -1,0 +1,1 @@
+import{_ as o}from"./C0ApsXXQ.js";import{u as r}from"./BQfcDCpi.js";import{e as a,g as m,l as n,k as s,o as c}from"./DILZzNnB.js";const g=a({__name:"Alert2",setup(_){const e=r();return(p,l)=>{const t=o;return s(e).message?(c(),m(t,{key:0,type:s(e).type,message:s(e).message,class:"w-full"},null,8,["type","message"])):n("",!0)}}});export{g as _};

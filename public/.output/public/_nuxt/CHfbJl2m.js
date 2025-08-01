@@ -1,0 +1,1 @@
+import{e,m as n,n as s,g as c,w as l,H as u,o as r,b as _,B as m}from"./DILZzNnB.js";import{u as p}from"./B1YFAJ8f.js";const b=e({__name:"logout",setup(i){const o=p();return n(async()=>{await o.logout(),s("/login")}),(d,f)=>{const t=m,a=u;return r(),c(a,null,{default:l(()=>[_(t,{class:"bg-blueGray-800 bg-full"})]),_:1})}}});export{b as default};

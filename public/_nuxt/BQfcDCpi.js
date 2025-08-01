@@ -1,0 +1,1 @@
+import{N as o,r}from"./DILZzNnB.js";const n=o("alert",()=>{const e=r(null),s=r("success");return{message:e,type:s}}),c=(e,s)=>{const t=n();t.message=e,t.type=s,setTimeout(()=>{t.message=null},5e3)};export{c as s,n as u};
